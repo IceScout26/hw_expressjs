@@ -44,4 +44,24 @@ router.get('/categories', function (req, res) {
     });
 });
 
+router.get('/films/category/:categoryName', function (req, res) {
+    const categoryName = req.params.categoryName.toLowerCase(); // conversion to lowercase
+    pool.query(
+        'SELECT f.* ' +
+        'FROM film f ' +
+        'JOIN film_category fc ON f.film_id = fc.film_id ' +
+        'JOIN category c ON fc.category_id = c.category_id ' +
+        'WHERE LOWER(c.name) = $1', // use LOWER() to convert to lowercase
+        [categoryName],
+        (err, result) => {
+            if (err) {
+                console.error(err); 
+                res.status(500).json({ error: 'Internal Server Error' }); // Respond with an error message
+            } else {
+                res.json(result.rows);
+            }
+        }
+    );
+});
+
 module.exports = router;
