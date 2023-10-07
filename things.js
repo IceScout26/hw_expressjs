@@ -4,8 +4,8 @@ var pool = require('./queries.js');
 
 //error handling
 function handleQueryError(err, res) {
-    console.error(err); // Log error ke konsol untuk debugging
-    res.status(500).json({ error: 'Internal Server Error' }); // Respond dengan pesan error
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' }); //respon if error
 }
 
 // This route for showing all films
@@ -47,6 +47,7 @@ router.get('/categories', function (req, res) {
     });
 });
 
+// This route for showing all films by category name
 router.get('/films/category/:categoryName', function (req, res) {
     const categoryName = req.params.categoryName.toLowerCase(); // conversion to lowercase
     pool.query(
