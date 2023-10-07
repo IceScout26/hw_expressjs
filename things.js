@@ -67,4 +67,15 @@ router.get('/films/category/:categoryName', function (req, res) {
     );
 });
 
+// This route for showing all actors data
+router.get('/actors', function (req, res) {
+    pool.query('SELECT * FROM actor', (err, result) => {
+        if (err) {
+            handleQueryError(err, res);
+        } else {
+            res.json(result.rows); // Send the data as JSON
+        }
+    });
+});
+
 module.exports = router;
