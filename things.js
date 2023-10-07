@@ -32,4 +32,16 @@ router.get('/films/:film_id', function (req, res) {
     });
 });
 
+// This route for showing all categories
+router.get('/categories', function (req, res) {
+    pool.query('SELECT * FROM category', (err, result) => {
+        if (err) {
+            console.error(err); 
+            res.status(500).json({ error: 'Internal Server Error' }); // Respond with an error message
+        } else {
+            res.json(result.rows); // Send the data as JSON
+        }
+    });
+});
+
 module.exports = router;
